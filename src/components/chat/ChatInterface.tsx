@@ -55,9 +55,10 @@ const handleSendMessage = async (content: string) => {
   if (!user || !selectedChatId || !content.trim()) return;
 
   setIsTyping(true);
-
+// https://5chgqvmq-8000.inc1.devtunnels.ms/
+// http://localhost:8000/chat
   try {
-    const response = await axios.post("http://localhost:8000/chat", {
+    const response = await axios.post("https://5chgqvmq-8000.inc1.devtunnels.ms/chat", {
       message: content,
       uid: user.uid,
       chatId: selectedChatId,
