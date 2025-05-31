@@ -13,6 +13,7 @@ import {
   orderBy
 } from 'firebase/firestore';
 import { UseAuthStore } from "@/store/useAuthStore";
+import { toast } from "react-toastify";
 
 export function ChatInterface({ selectedChatId }: { selectedChatId: string | null }) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -57,6 +58,9 @@ const handleSendMessage = async (content: string) => {
   setIsTyping(true);
 // https://5chgqvmq-8000.inc1.devtunnels.ms/
 // http://localhost:8000/chat
+// https://5chgqvmq-8000.inc1.devtunnels.ms/chat
+// https://sales-agent-server.vercel.app/chat
+// https://5chgqvmq-8000.inc1.devtunnels.ms/
   try {
     const response = await axios.post("https://5chgqvmq-8000.inc1.devtunnels.ms/chat", {
       message: content,
@@ -67,11 +71,12 @@ const handleSendMessage = async (content: string) => {
     const botReply = response.data.response;
 
     if (!botReply) {
-      console.error("Invalid API response:", response.data);
+      console.log("Invalid API response:", response.data);
     }
 
   } catch (error) {
-    console.error("API error:", error);
+    console.log("API error:", error);
+    toast.error("Sorry, Server is Busy. Please try again later.")
   }
 
   setIsTyping(false);
@@ -83,7 +88,7 @@ const handleSendMessage = async (content: string) => {
 
   return (
     <div className="flex h-full flex-col">
-      <ChatHeader />
+      <ChatHeader isTyping={isTyping} />
       <MessageList messages={messages} isTyping={isTyping} messagesEndRef={messagesEndRef} />
       <ChatInput onSendMessage={handleSendMessage} />
     </div>

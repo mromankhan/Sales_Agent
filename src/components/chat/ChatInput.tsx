@@ -4,6 +4,8 @@ import { SendIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { cn } from "@/lib/utils";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -42,6 +44,8 @@ export function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
   };
 
   return (
+    <>
+    <ToastContainer position="top-center" theme='dark' />
     <div className={cn(
       "sticky bottom-0 z-10 bg-background/80 backdrop-blur-sm",
       "border-t border-border px-4 py-4 md:py-5 md:px-6"
@@ -60,7 +64,7 @@ export function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
             disabled && "opacity-70"
           )}
           rows={1}
-        />
+          />
         <Button
           type="submit"
           size="icon"
@@ -72,12 +76,13 @@ export function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
           )}
           disabled={!message.trim() || disabled}
           onClick={handleSend}
-        >
+          >
           <SendIcon className="h-4 w-4" />
           <span className="sr-only">Send message</span>
         </Button>
       </div>
     </div>
+    </>
   );
 }
 
